@@ -20,14 +20,14 @@ describe('Placing Pieces on the Board', () => {
     game.placePiece(0, 0, true);
     game.placePiece(1, 0, true);
     game.placePiece(2, 0, true);
-    expect(game.getWinner()).to.equal(true);
+    expect(game.getWinner()).to.equal(game.PLAYER);
   });
 
   it('can be won by column match', () => {
     game.placePiece(0, 0, false);
     game.placePiece(0, 1, false);
     game.placePiece(0, 2, false);
-    expect(game.getWinner()).to.equal(true);
+    expect(game.getWinner()).to.equal(game.COMPUTER);
   });
 
   it('can\'t be won by a mix of players pieces', () =>{
@@ -36,10 +36,10 @@ describe('Placing Pieces on the Board', () => {
     game.placePiece(0, 2, false);
     game.placePiece(1, 0, true);
     game.placePiece(2, 0, true);
-    expect(game.getWinner()).to.equal(false);
+    expect(game.getWinner()).to.equal(null);
   });
 
   it('can be in progress', () => {
-    expect(game.getWinner()).to.equal(false);
+    expect(game.getWinner()).to.equal(null);
   });
 });

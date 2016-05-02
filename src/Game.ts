@@ -1,13 +1,20 @@
 export class Game{
-  board: number[][] = [[,,],[,,],[,,]];
+  board:     number[][] = [[,,],[,,],[,,]];
   BOARDSIZE: number = 3;
+  PLAYER:    string = "Player";
+  COMPUTER:  string = "Computer";
 
   placePiece(x: number, y: number, isPlayer: boolean){
     this.board[x][y] = (isPlayer)? 4 : 1;
   }
 
   getWinner(){
-    return this.is(GAMESTATES.ComputerWon) || this.is(GAMESTATES.PlayerWon);
+    if      (this.is(GAMESTATES.ComputerWon)){
+      return this.COMPUTER;
+    }else if(this.is(GAMESTATES.PlayerWon)){
+      return this.PLAYER;
+    }
+    return null;
   }
 
 
