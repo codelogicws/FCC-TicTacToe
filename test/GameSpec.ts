@@ -16,11 +16,14 @@ describe('Placing Pieces on the Board', () => {
     expect(game.placePiece).to.be.a('function');
   });
 
-  it('can be won', () => {
-    expect(game.getWinner()).to.be.a('string');
+  it('can be won by row match', () => {
+    game.placePiece(0, 0, true);
+    game.placePiece(1, 0, true);
+    game.placePiece(2, 0, true);
+    expect(game.getWinner()).to.equal(true);
   });
 
   it('can be in progress', () => {
-    expect(game.getWinner()).to.be.a(undefined);
+    expect(game.getWinner()).to.equal(false);
   });
 });

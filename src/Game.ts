@@ -1,23 +1,51 @@
-/*
-A X O placement has a number value for computer and players
-computer = 1
-players = 4
-this means that if you sum a column or row then the following should be true
-8 = player is 1 move from winning
-2 = computer is 1 move from winning
-12 = player 3 in a row
-3 = computer 3 in a row
-*/
 export class Game{
-  board: number[][];
+  board: number[][] = [[,,],[,,],[,,]];
+  BOARDSIZE: number = 3;
 
-  constructor(){}
   placePiece(x: number, y: number, isPlayer: boolean){
     this.board[x][y] = (isPlayer)? 4 : 1;
   }
 
   getWinner(){
-    return;
+    return this.is(GAMESTATES.ComputerWon) || this.is(GAMESTATES.PlayerWon);
   }
 
+
+
+
+  private is(gameState: GAMESTATES){
+    var isGameState = false;
+    for(var i=0; i<this.BOARDSIZE; i++)
+      if(this.checkRow(i, gameState))
+        return true;
+    return false;
+  }
+
+  private checkRow(row: number, gameState: GAMESTATES){
+    var sum = 0;
+    for(var i=0; i<this.BOARDSIZE;i++){
+      var x = this.board[i][row];
+      sum += ( isNaN(x) )? 0 : x;
+    }
+    return (gameState == sum);
+  }
+
+  private printBoard(){
+    console.log('-------------------------');
+    for(var y=0;y<this.BOARDSIZE;y++){
+        let row: string = '';
+      for(var x=0;x<this.BOARDSIZE;x++){
+        row += (this.board[x][y] == undefined)? "-": this.board[x][y];
+      }
+      console.log(row);
+    }
+  }
+
+}
+
+enum GAMESTATES {
+  Computer1MoveFromWinning = 2,
+  ComputerWon = 3,
+  Player1MoveFromWinning = 8,
+  PlayerWon = 12
 }
