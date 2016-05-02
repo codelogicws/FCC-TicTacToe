@@ -6,9 +6,21 @@ var expect = chai.expect;
 
 
 describe('Placing Pieces on the Board', () => {
-  var game = new Game();
-  it('Is a function', (done) => {
+  let game: Game;
+
+  beforeEach(()=>{
+    game = new Game();
+  });
+
+  it('is a function', () => {
     expect(game.placePiece).to.be.a('function');
-    done();
+  });
+
+  it('can be won', () => {
+    expect(game.getWinner()).to.be.a('string');
+  });
+
+  it('can be in progress', () => {
+    expect(game.getWinner()).to.be.a(undefined);
   });
 });
