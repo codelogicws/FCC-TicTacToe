@@ -11,20 +11,18 @@ export class Game{
   }
 
 
-
-
   private is(gameState: GAMESTATES){
     var isGameState = false;
     for(var i=0; i<this.BOARDSIZE; i++)
-      if(this.checkRow(i, gameState))
+      if(this.checkRowOrColumn(i, gameState, true) || this.checkRowOrColumn(i, gameState, false))
         return true;
     return false;
   }
 
-  private checkRow(row: number, gameState: GAMESTATES){
+  private checkRowOrColumn(row: number, gameState: GAMESTATES, isRow: boolean){
     var sum = 0;
     for(var i=0; i<this.BOARDSIZE;i++){
-      var x = this.board[i][row];
+      var x = (isRow)?this.board[i][row]:this.board[row][i];
       sum += ( isNaN(x) )? 0 : x;
     }
     return (gameState == sum);

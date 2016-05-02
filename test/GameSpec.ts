@@ -23,6 +23,13 @@ describe('Placing Pieces on the Board', () => {
     expect(game.getWinner()).to.equal(true);
   });
 
+  it('can be won by column match', () => {
+    game.placePiece(0, 0, true);
+    game.placePiece(0, 1, true);
+    game.placePiece(0, 2, true);
+    expect(game.getWinner()).to.equal(true);
+  });
+
   it('can be in progress', () => {
     expect(game.getWinner()).to.equal(false);
   });
