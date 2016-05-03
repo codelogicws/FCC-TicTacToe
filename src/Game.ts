@@ -4,8 +4,8 @@ export class Game{
   PLAYER:    string = "Player";
   COMPUTER:  string = "Computer";
 
-  placePiece(x: number, y: number, isPlayer: boolean){
-    this.board[x][y] = (isPlayer)? PLAYERS.PLAYER : PLAYERS.COMPUTER;
+  placePiece(x: number, y: number, player: PLAYERS){
+    this.board[x][y] = (player == PLAYERS.PLAYER)? PLAYERS.PLAYER : PLAYERS.COMPUTER;
   }
 
   getWinner(){
@@ -21,7 +21,7 @@ export class Game{
     for(var y=0;y<this.BOARDSIZE;y++){
       for(var x=0; x<this.BOARDSIZE; x++){
         if(this.board[x][y] == null ){
-          this.placePiece(x, y, false);
+          this.placePiece(x, y, PLAYERS.COMPUTER);
           return;
         }
       }

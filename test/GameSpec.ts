@@ -14,6 +14,7 @@ describe('Game Tests', () => {
   });
 
   describe('AI', () =>{
+
     it('Computer can place a peice on the board', () =>{
       //refactor an assigned number for comptuer and player
       game.computersTurn();
@@ -31,25 +32,25 @@ describe('Game Tests', () => {
 
   describe('Winning Games', () =>{
     it('can be won by row match', () => {
-      game.placePiece(0, 0, true);
-      game.placePiece(1, 0, true);
-      game.placePiece(2, 0, true);
+      game.placePiece(0, 0, PLAYERS.PLAYER);
+      game.placePiece(1, 0, PLAYERS.PLAYER);
+      game.placePiece(2, 0, PLAYERS.PLAYER);
       expect(game.getWinner()).to.equal(PLAYERS.PLAYER);
     });
 
     it('can be won by column match', () => {
-      game.placePiece(0, 0, false);
-      game.placePiece(0, 1, false);
-      game.placePiece(0, 2, false);
+      game.placePiece(0, 0, PLAYERS.COMPUTER);
+      game.placePiece(0, 1, PLAYERS.COMPUTER);
+      game.placePiece(0, 2, PLAYERS.COMPUTER);
       expect(game.getWinner()).to.equal(PLAYERS.COMPUTER);
     });
 
     it('can\'t be won by a mix of players pieces', () =>{
-      game.placePiece(0, 0, false);
-      game.placePiece(0, 1, true);
-      game.placePiece(0, 2, false);
-      game.placePiece(1, 0, true);
-      game.placePiece(2, 0, true);
+      game.placePiece(0, 0, PLAYERS.PLAYER);
+      game.placePiece(0, 1, PLAYERS.COMPUTER);
+      game.placePiece(0, 2, PLAYERS.PLAYER);
+      game.placePiece(1, 0, PLAYERS.COMPUTER);
+      game.placePiece(2, 0, PLAYERS.COMPUTER);
       expect(game.getWinner()).to.equal(null);
     });
 
@@ -57,7 +58,7 @@ describe('Game Tests', () => {
       expect(game.getWinner()).to.equal(null);
     });
 
-    it('allows computer to win when taking its own turns', ()=>{
+    it('allows computer to win on its own', ()=>{
       game.computersTurn();
       game.computersTurn();
       game.computersTurn();
