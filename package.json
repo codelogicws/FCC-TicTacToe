@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./built/test",
+    "test": "./node_modules/mocha/bin/mocha ./built/test --reporter nyan",
     "echo": "echo 'Hello World'",
     "tsc": "tsc -w",
     "start": "live-server --open=html"
