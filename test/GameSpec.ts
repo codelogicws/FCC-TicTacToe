@@ -15,6 +15,14 @@ describe('Game Tests', () => {
 
   describe('AI', () =>{
 
+    // it('Computer should block users win if possible', ()=>{
+    //   game.placePiece(0, 2, PLAYERS.PLAYER);
+    //   game.placePiece(1, 2, PLAYERS.PLAYER);
+    //   game.computersTurn();
+    //   game.getBoard();
+    //   expect( game.getBoard[2][2]  ).to.equal(PLAYERS.COMPUTER);
+    // });
+
     it('Computer can place a peice on the board', () =>{
       //refactor an assigned number for comptuer and player
       game.computersTurn();
