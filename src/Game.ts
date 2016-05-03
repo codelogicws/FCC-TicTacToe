@@ -10,13 +10,20 @@ export class Game{
 
   getWinner(){
     if      (this.is(GAMESTATES.ComputerWon)){
-      return this.COMPUTER;
+      return PLAYERS.COMPUTER;
     }else if(this.is(GAMESTATES.PlayerWon)){
-      return this.PLAYER;
+      return PLAYERS.PLAYER;
     }
     return null;
   }
 
+  computersTurn(){
+    this.board[0][0] = PLAYERS.COMPUTER;
+  }
+
+  public getBoard(){
+    return this.board;
+  }
 
   private is(gameState: GAMESTATES){
     var isGameState = false;
@@ -53,4 +60,9 @@ enum GAMESTATES {
   ComputerWon = 3,
   Player1MoveFromWinning = 8,
   PlayerWon = 12
+}
+
+export enum PLAYERS{
+  PLAYER = 1,
+  COMPUTER = 4
 }
