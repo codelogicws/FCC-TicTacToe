@@ -18,7 +18,14 @@ export class Game{
   }
 
   computersTurn(){
-    this.board[0][0] = PLAYERS.COMPUTER;
+    for(var y=0;y<this.BOARDSIZE;y++){
+      for(var x=0; x<this.BOARDSIZE; x++){
+        if(this.board[x][y] == null ){
+          this.board[x][y] = PLAYERS.COMPUTER;
+          return;
+        }
+      }
+    }
   }
 
   public getBoard(){

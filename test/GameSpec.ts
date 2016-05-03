@@ -20,6 +20,13 @@ describe('Game Tests', () => {
       expect(  addBoard(game.getBoard())  ).to.equal(PLAYERS.COMPUTER);
     });
 
+    it('Computer can take multiple Turns', ()=>{
+      game.computersTurn();
+      game.computersTurn();
+      let moveCounter: number = PLAYERS.COMPUTER + PLAYERS.COMPUTER;
+      expect(  addBoard(game.getBoard())  ).to.equal(moveCounter);
+    });
+
   });
 
   describe('Winning Games', () =>{
