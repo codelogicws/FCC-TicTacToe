@@ -5,7 +5,7 @@ export class Game{
   COMPUTER:  string = "Computer";
 
   placePiece(x: number, y: number, isPlayer: boolean){
-    this.board[x][y] = (isPlayer)? 4 : 1;
+    this.board[x][y] = (isPlayer)? PLAYERS.PLAYER : PLAYERS.COMPUTER;
   }
 
   getWinner(){
@@ -21,7 +21,7 @@ export class Game{
     for(var y=0;y<this.BOARDSIZE;y++){
       for(var x=0; x<this.BOARDSIZE; x++){
         if(this.board[x][y] == null ){
-          this.board[x][y] = PLAYERS.COMPUTER;
+          this.placePiece(x, y, false);
           return;
         }
       }
@@ -70,6 +70,6 @@ enum GAMESTATES {
 }
 
 export enum PLAYERS{
-  PLAYER = 1,
-  COMPUTER = 4
+  PLAYER = 4,
+  COMPUTER = 1
 }

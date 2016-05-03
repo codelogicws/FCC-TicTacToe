@@ -56,6 +56,13 @@ describe('Game Tests', () => {
     it('can be in progress', () => {
       expect(game.getWinner()).to.equal(null);
     });
+
+    it('allows computer to win when taking its own turns', ()=>{
+      game.computersTurn();
+      game.computersTurn();
+      game.computersTurn();
+      expect(game.getWinner()).to.equal(PLAYERS.COMPUTER);
+    });
   });
 
 
