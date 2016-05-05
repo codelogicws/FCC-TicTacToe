@@ -1,3 +1,3 @@
 * Tasks
-** TODO "game.is" should return the cords of the effected area instead of a Boolean
+** TODO "game.is" should return the cords of the area of interest instead of a Boolean
 ** TODO Uncomment test in GameSpec and make it pass
