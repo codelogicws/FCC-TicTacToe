@@ -16,7 +16,7 @@ describe('Game Tests', () => {
   describe('Temp assumption check', ()=>{
     it('should resolve an enum to a default type', ()=>{
       game.placePiece(0,0,PLAYERS.PLAYER);
-      game.placePiece(1,0,PLAYERS.PLAYER);
+      game.placePiece(0,1,PLAYERS.PLAYER);
       game.test1();
       expect( game.test1() ).to.equal( GAMESTATES.Player1MoveFromWinning);
     })
