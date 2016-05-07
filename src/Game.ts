@@ -1,9 +1,6 @@
 let board: number[][] = [[,,],[,,],[,,]];
 
 export class Game{
-  BOARDSIZE: number = 3;
-  PLAYER:    string = "Player";
-  COMPUTER:  string = "Computer";
 
   winningCombos: Point[][] = [
     [new Point(0,0), new Point(0,1), new Point(0,2)],
@@ -28,8 +25,13 @@ export class Game{
   }
 
   public test1(){
-    //use a reduce to go through all the possible win combos
-    return this.checkCombo(this.winningCombos[0]).state;
+    return this.winningCombos.reduce((pre, current)=>{
+      if(pre.state == GAMESTATES.ComputerWon || pre.state == GAMESTATES.PlayerWon)
+        return pre;
+      let currentState: GameStateResult = this.checkCombo(current);
+      return (currentState.state > pre.state)? currentState : pre;
+
+    }, new GameStateResult);
   }
 
 
@@ -51,10 +53,11 @@ export class Game{
   }
 
   private printBoard(){
+    let BOARDSIZE: number = 3;
     console.log('-------------------------');
-    for(var y=0;y<this.BOARDSIZE;y++){
+    for(var y=0;y<BOARDSIZE;y++){
         let row: string = '';
-      for(var x=0;x<this.BOARDSIZE;x++){
+      for(var x=0;x<BOARDSIZE;x++){
         row += (board[x][y] == undefined)? "-": board[x][y];
       }
       console.log(row);
