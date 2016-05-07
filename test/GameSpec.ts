@@ -6,19 +6,42 @@ import {Game, PLAYERS, GAMESTATES} from "../src/Game";
 var expect = chai.expect;
 
 
-describe('Game Tests', () => {
+describe('Game Tests.', () => {
   let game: Game;
 
   beforeEach(()=>{
     game = new Game();
   });
 
-  describe('Game understands the state that it is in', ()=>{
-    it('should know when a player is on move from winning', ()=>{
-      game.placePiece(0,0,PLAYERS.PLAYER);
-      game.placePiece(0,1,PLAYERS.PLAYER);
-      game.test1();
-      expect( game.test1().state ).to.equal( GAMESTATES.Player1MoveFromWinning);
+  describe('Game understands the state that it is in.', ()=>{
+    describe('Game should know when a player/computer is 1 move from winning.', ()=>{
+      it('should know when pieces are in a column', ()=>{
+        game.placePiece(0,0,PLAYERS.PLAYER);
+        game.placePiece(2,2,PLAYERS.COMPUTER);
+        game.placePiece(0,1,PLAYERS.PLAYER);
+        game.test1();
+        expect( game.test1().state ).to.equal( GAMESTATES.Player1MoveFromWinning);
+      })
+
+      it.only('should know when pieces are in a row', ()=>{
+        game.placePiece(0,1,PLAYERS.COMPUTER);
+        game.placePiece(2,2,PLAYERS.PLAYER);
+        game.placePiece(1,1,PLAYERS.COMPUTER);
+        game.test1();
+        game.printBoard();
+        expect( game.test1().state ).to.equal( GAMESTATES.Computer1MoveFromWinning);
+      })
+
+      it('should not show if computer is in the way', ()=>{
+        game.placePiece(0,0,PLAYERS.PLAYER);
+        game.placePiece(0,2,PLAYERS.COMPUTER);
+        game.placePiece(0,1,PLAYERS.PLAYER);
+        game.test1();
+        expect( game.test1().state ).to.not.equal( GAMESTATES.Player1MoveFromWinning);
+        expect( game.test1().state ).to.not.equal( GAMESTATES.PlayerWon);
+        expect( game.test1().state ).to.not.equal( GAMESTATES.ComputerWon);
+        expect( game.test1().state ).to.not.equal( GAMESTATES.Computer1MoveFromWinning);
+      })
     })
 
   })

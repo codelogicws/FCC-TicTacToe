@@ -26,10 +26,8 @@ export class Game{
 
   public test1(){
     return this.winningCombos.reduce((pre, current)=>{
-      if(pre.state == GAMESTATES.ComputerWon || pre.state == GAMESTATES.PlayerWon)
-        return pre;
       let currentState: GameStateResult = this.checkCombo(current);
-      return (currentState.state > pre.state)? currentState : pre;
+      return (pre.isMoreImportentThen(currentState))? pre: currentState;
 
     }, new GameStateResult);
   }
@@ -69,6 +67,25 @@ export class Game{
 class GameStateResult{
   state: GAMESTATES = 0;
   lastEmpty: Point = new Point(-1, -1);
+
+  public isMoreImportentThen(other: GameStateResult){
+    if(this.isWinning(this.state)){
+      return true;
+    }else if(this.isWinning(other.state)){
+      return false;
+    }else if(this.is1FromWin(other.state)){
+      return false;
+    }
+    return true;
+  }
+
+  private isWinning(k: GAMESTATES){
+    return (k == GAMESTATES.ComputerWon || k == GAMESTATES.PlayerWon);
+  }
+
+  private is1FromWin(k: GAMESTATES){
+    return (k == GAMESTATES.Computer1MoveFromWinning || k == GAMESTATES.Player1MoveFromWinning);
+  }
 }
 
 class Point{
