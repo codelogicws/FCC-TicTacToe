@@ -8,45 +8,25 @@ export class Game{
     this.board[x][y] = (player == PLAYERS.PLAYER)? PLAYERS.PLAYER : PLAYERS.COMPUTER;
   }
 
-  getWinner(){
-    if      (this.is(GAMESTATES.ComputerWon)){
-      return PLAYERS.COMPUTER;
-    }else if(this.is(GAMESTATES.PlayerWon)){
-      return PLAYERS.PLAYER;
-    }
-    return null;
-  }
-
-  computersTurn(){
-    for(var y=0;y<this.BOARDSIZE;y++){
-      for(var x=0; x<this.BOARDSIZE; x++){
-        if(this.board[x][y] == null ){
-          this.placePiece(x, y, PLAYERS.COMPUTER);
-          return;
-        }
-      }
-    }
-  }
-
   public getBoard(){
     return this.board;
   }
 
-  private is(gameState: GAMESTATES){
-    var isGameState = false;
-    for(var i=0; i<this.BOARDSIZE; i++)
-      if(this.checkRowOrColumn(i, gameState, true) || this.checkRowOrColumn(i, gameState, false))
-        return true;
-    return false;
+  private checkCombo(xModifier: any, yModifier: any, x: number, y: number){
+    let state: GameStateResult = new GameStateResult;
+    let total: number = 0;
+    for(var i=0; i<3; i++){
+
+    }
+    return state;
   }
 
-  private checkRowOrColumn(row: number, gameState: GAMESTATES, isRow: boolean){
-    var sum = 0;
-    for(var i=0; i<this.BOARDSIZE;i++){
-      var x = (isRow)?this.board[i][row]:this.board[row][i];
-      sum += ( isNaN(x) )? 0 : x;
-    }
-    return (gameState == sum);
+  private decrement(start: number, x: number){
+    return start - x;
+  }
+
+  private increment(start: number, x: number){
+    return start + x;
   }
 
   private printBoard(){
@@ -62,11 +42,22 @@ export class Game{
 
 }
 
+class GameStateResult{
+  state: GAMESTATES = GAMESTATES.Uninteresting;
+  point: Point = new Point;
+}
+
+class Point{
+  x: number = -1;
+  y: number = -1;
+}
+
 enum GAMESTATES {
   Computer1MoveFromWinning = 2,
   ComputerWon = 3,
   Player1MoveFromWinning = 8,
-  PlayerWon = 12
+  PlayerWon = 12,
+  Uninteresting = 0
 }
 
 export enum PLAYERS{
