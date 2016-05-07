@@ -27,12 +27,49 @@ export class Game{
     return board;
   }
 
-  public test1(){
+  public computerTakeTurn(){
+    let currentState: GameStateResult = this.getCurrentState();
+    if(currentState.is1FromWin(currentState.state)){
+       currentState.lastEmpty.toBoard(PLAYERS.COMPUTER);
+    }else{
+      this.computerPlaceRandomPiece();
+    }
+  }
+
+  public getCurrentState(): GameStateResult{
     return this.winningCombos.reduce((pre, current)=>{
       let currentState: GameStateResult = this.checkCombo(current);
       return (pre.isMoreImportentThen(currentState))? pre: currentState;
 
     }, new GameStateResult);
+  }
+
+  public printBoard(){
+    let BOARDSIZE: number = 3;
+    console.log('-------------------------');
+    for(var y=0;y<BOARDSIZE;y++){
+        let row: string = '';
+      for(var x=0;x<BOARDSIZE;x++){
+        row += (board[x][y] == undefined)? "-": board[x][y];
+      }
+      console.log(row);
+    }
+  }
+
+
+
+
+
+  private computerPlaceRandomPiece(){
+    boardLook:
+    for(var y=0;y<3;y++){
+      for(var x=0;x<3;x++){
+        if(board[x][y] == null){
+          board[x][y] = PLAYERS.COMPUTER;
+          break boardLook;
+        }
+      }
+    }
   }
 
   private checkCombo(combo: Point[]): GameStateResult{
@@ -47,18 +84,6 @@ export class Game{
 
     state.state = total;
     return state;
-  }
-
-  public printBoard(){
-    let BOARDSIZE: number = 3;
-    console.log('-------------------------');
-    for(var y=0;y<BOARDSIZE;y++){
-        let row: string = '';
-      for(var x=0;x<BOARDSIZE;x++){
-        row += (board[x][y] == undefined)? "-": board[x][y];
-      }
-      console.log(row);
-    }
   }
 
 }
@@ -78,11 +103,11 @@ class GameStateResult{
     return true;
   }
 
-  private isWinning(k: GAMESTATES){
+  public isWinning(k: GAMESTATES){
     return (k == GAMESTATES.ComputerWon || k == GAMESTATES.PlayerWon);
   }
 
-  private is1FromWin(k: GAMESTATES){
+  public is1FromWin(k: GAMESTATES){
     return (k == GAMESTATES.Computer1MoveFromWinning || k == GAMESTATES.Player1MoveFromWinning);
   }
 }
@@ -91,6 +116,10 @@ class Point{
   constructor(x: number, y: number){
     this.x = x;
     this.y = y;
+  }
+
+  public toBoard(player: PLAYERS){
+    board[this.x][this.y] = player;
   }
 
   public value(){

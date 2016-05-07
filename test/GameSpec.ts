@@ -14,9 +14,11 @@ describe('Game Tests.', () => {
   });
 
   describe('AI.', ()=>{
-    // it('should place computers piece', ()=>{
-    //   game.computerTakeTurn();
-    // })
+    it('should place computers piece', ()=>{
+      game.computerTakeTurn();
+      let count: number = addBoard(game.getBoard());
+      expect( count ).to.equal(PLAYERS.COMPUTER);
+    });
   });
 
   describe('Game understands the state that it is in.', ()=>{
@@ -87,3 +89,13 @@ describe('Game Tests.', () => {
   })
 
 });
+
+function addBoard(board: number[][]){
+  let count: number = 0;
+  board.forEach((outerElement)=>{
+    outerElement.forEach((innerElement)=>{
+      count += (innerElement != null)? innerElement : 0;
+    });
+  });
+  return count;
+}
