@@ -19,7 +19,14 @@ describe('Game Tests.', () => {
       let count: number = addBoard(game.getBoard());
       expect( count ).to.equal(PLAYERS.COMPUTER);
     });
-  });
+
+    it('should place computer piece to block a player win', ()=>{
+      game.placePiece(0,2,PLAYERS.PLAYER);
+      game.placePiece(2,0,PLAYERS.PLAYER);
+      game.computerTakeTurn();
+      expect( game.getBoard()[1][1] ).to.equal(PLAYERS.COMPUTER);
+    })
+  })
 
   describe('Game understands the state that it is in.', ()=>{
     it('should report a win over a near win', ()=>{
