@@ -23,12 +23,11 @@ describe('Game Tests.', () => {
         expect( game.test1().state ).to.equal( GAMESTATES.Player1MoveFromWinning);
       })
 
-      it.only('should know when pieces are in a row', ()=>{
+      it('should know when pieces are in a row', ()=>{
         game.placePiece(0,1,PLAYERS.COMPUTER);
         game.placePiece(2,2,PLAYERS.PLAYER);
         game.placePiece(1,1,PLAYERS.COMPUTER);
         game.test1();
-        game.printBoard();
         expect( game.test1().state ).to.equal( GAMESTATES.Computer1MoveFromWinning);
       })
 

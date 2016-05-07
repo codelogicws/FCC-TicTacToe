@@ -1,6 +1,9 @@
-let board: number[][] = [[,,],[,,],[,,]];
+let board: number[][];
 
 export class Game{
+  constructor(){
+    board = [[,,],[,,],[,,]];
+  }
 
   winningCombos: Point[][] = [
     [new Point(0,0), new Point(0,1), new Point(0,2)],
@@ -32,10 +35,6 @@ export class Game{
     }, new GameStateResult);
   }
 
-
-
-
-
   private checkCombo(combo: Point[]): GameStateResult{
     let total: number = 0;
     let state: GameStateResult = new GameStateResult();
@@ -50,7 +49,7 @@ export class Game{
     return state;
   }
 
-  private printBoard(){
+  public printBoard(){
     let BOARDSIZE: number = 3;
     console.log('-------------------------');
     for(var y=0;y<BOARDSIZE;y++){
