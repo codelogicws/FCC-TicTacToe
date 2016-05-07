@@ -26,6 +26,14 @@ describe('Game Tests.', () => {
       game.computerTakeTurn();
       expect( game.getBoard()[1][1] ).to.equal(PLAYERS.COMPUTER);
     })
+
+    it('should place computer piece if it means a win', ()=>{
+      game.placePiece(2,2,PLAYERS.COMPUTER);
+      game.placePiece(2,0,PLAYERS.COMPUTER);
+      game.computerTakeTurn();
+      expect( game.getCurrentState().state ).to.equal(GAMESTATES.ComputerWon);
+    })
+
   })
 
   describe('Game understands the state that it is in.', ()=>{
