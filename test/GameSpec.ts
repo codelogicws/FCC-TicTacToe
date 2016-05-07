@@ -17,8 +17,8 @@ describe('Game Tests', () => {
     it('should resolve an enum to a default type', ()=>{
       game.placePiece(0,0,PLAYERS.PLAYER);
       game.placePiece(1,0,PLAYERS.PLAYER);
-      game.test();
-      expect( game.test() ).to.equal( GAMESTATES.Player1MoveFromWinning);
+      game.test1();
+      expect( game.test1() ).to.equal( GAMESTATES.Player1MoveFromWinning);
     })
   })
 

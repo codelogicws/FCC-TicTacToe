@@ -1,21 +1,25 @@
-let board: number[][] = [[,,],[,,],[,,]];
 
 export class Game{
   BOARDSIZE: number = 3;
   PLAYER:    string = "Player";
   COMPUTER:  string = "Computer";
+  board: number[][] = [[,,],[,,],[,,]];
 
-  placePiece(x: number, y: number, player: PLAYERS){
-    board[x][y] = (player == PLAYERS.PLAYER)? PLAYERS.PLAYER : PLAYERS.COMPUTER;
+  public placePiece(x: number, y: number, player: PLAYERS){
+    this.board[x][y] = (player == PLAYERS.PLAYER)? PLAYERS.PLAYER : PLAYERS.COMPUTER;
   }
 
   public getBoard(){
-    return board;
+    return this.board;
   }
 
-  public test(){
+  public test1(){
     return this.checkCombo(this.increment, this.unchanged, 0, 0).state;
   }
+
+
+
+
 
   private checkCombo(xModifier: any, yModifier: any, x: number, y: number): GameStateResult{
     let total: number = 0;
@@ -24,11 +28,11 @@ export class Game{
     for(var i=0; i<this.BOARDSIZE; i++){
       let currentX: number = xModifier(x, i);
       let currentY: number = yModifier(y, i);
-      if(board[currentX][currentY] == null)
+      let val = this.board[currentX][currentY];
+
+      if(val == null)
         state.lastEmpty = new Point(currentX, currentY);
-      total += (  board[currentX][currentY]  )? 0: total;
-      console.log('cords ' + currentX + ' ' + currentY + ' node: ' + board[currentX][currentY] + '\n' +
-        'Total: ' + total);
+      total += (  isNaN(val)  )? 0 : val;
     }
     state.state = total;
     return state;
@@ -51,7 +55,7 @@ export class Game{
     for(var y=0;y<this.BOARDSIZE;y++){
         let row: string = '';
       for(var x=0;x<this.BOARDSIZE;x++){
-        row += (board[x][y] == undefined)? "-": board[x][y];
+        row += (this.board[x][y] == undefined)? "-": this.board[x][y];
       }
       console.log(row);
     }
