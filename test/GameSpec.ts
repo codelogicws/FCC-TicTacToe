@@ -14,12 +14,23 @@ describe('Game Tests.', () => {
   });
 
   describe('Game understands the state that it is in.', ()=>{
+    it('should report a win over a near win', ()=>{
+        game.placePiece(0,0,PLAYERS.COMPUTER);
+        game.placePiece(0,1,PLAYERS.COMPUTER);
+        game.placePiece(2,1,PLAYERS.COMPUTER);
+        game.placePiece(2,2,PLAYERS.COMPUTER);
+        game.placePiece(1,0,PLAYERS.PLAYER);
+        game.placePiece(1,1,PLAYERS.PLAYER);
+        game.placePiece(1,2,PLAYERS.PLAYER);
+        expect( game.test1().state ).to.equal( GAMESTATES.PlayerWon );
+    });
+
+
     describe('Game should know when a player/computer is 1 move from winning.', ()=>{
       it('should know when pieces are in a column', ()=>{
         game.placePiece(0,0,PLAYERS.PLAYER);
         game.placePiece(2,2,PLAYERS.COMPUTER);
         game.placePiece(0,1,PLAYERS.PLAYER);
-        game.test1();
         expect( game.test1().state ).to.equal( GAMESTATES.Player1MoveFromWinning);
       })
 
@@ -27,14 +38,12 @@ describe('Game Tests.', () => {
         game.placePiece(0,1,PLAYERS.COMPUTER);
         game.placePiece(2,2,PLAYERS.PLAYER);
         game.placePiece(2,1,PLAYERS.COMPUTER);
-        game.test1();
         expect( game.test1().state ).to.equal( GAMESTATES.Computer1MoveFromWinning);
       })
 
       it('should know when pieces are in a diagonal', ()=>{
         game.placePiece(2,0,PLAYERS.COMPUTER);
         game.placePiece(0,2,PLAYERS.COMPUTER);
-        game.test1();
         expect( game.test1().state ).to.equal( GAMESTATES.Computer1MoveFromWinning);
       })
 
@@ -42,7 +51,6 @@ describe('Game Tests.', () => {
         game.placePiece(0,0,PLAYERS.PLAYER);
         game.placePiece(0,2,PLAYERS.COMPUTER);
         game.placePiece(0,1,PLAYERS.PLAYER);
-        game.test1();
         expect( game.test1().state ).to.not.equal( GAMESTATES.Player1MoveFromWinning);
         expect( game.test1().state ).to.not.equal( GAMESTATES.PlayerWon);
         expect( game.test1().state ).to.not.equal( GAMESTATES.ComputerWon);
