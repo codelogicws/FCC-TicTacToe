@@ -29,7 +29,7 @@ export class Game{
 
   public computerTakeTurn(){
     let currentState: GameStateResult = this.getCurrentState();
-    if(currentState.is1FromWin(currentState.state)){
+    if(currentState.is1FromWinning()){
        currentState.lastEmpty.toBoard(PLAYERS.COMPUTER);
     }else{
       this.computerPlaceRandomPiece();
@@ -103,11 +103,15 @@ class GameStateResult{
     return true;
   }
 
-  public isWinning(k: GAMESTATES){
+  public is1FromWinning(){
+    return this.is1FromWin(this.state);
+  }
+
+  private isWinning(k: GAMESTATES){
     return (k == GAMESTATES.ComputerWon || k == GAMESTATES.PlayerWon);
   }
 
-  public is1FromWin(k: GAMESTATES){
+  private is1FromWin(k: GAMESTATES){
     return (k == GAMESTATES.Computer1MoveFromWinning || k == GAMESTATES.Player1MoveFromWinning);
   }
 }
