@@ -1,6 +1,10 @@
-let board: number[][];
+/// <reference path="../typings/jquery/jquery.d.ts"/>
 
-export class Game{
+let board: number[][] = [[,,],[,,],[,,]];
+let userIsXs: boolean = true;
+
+
+class Game{
   constructor(){
     board = [[,,],[,,],[,,]];
   }
@@ -17,7 +21,6 @@ export class Game{
     [new Point(0,0), new Point(1,1), new Point(2,2)],
     [new Point(0,2), new Point(1,1), new Point(2,0)],
   ]
-
 
   public placePiece(x: number, y: number, player: PLAYERS){
     board[x][y] = (player == PLAYERS.PLAYER)? PLAYERS.PLAYER : PLAYERS.COMPUTER;
@@ -135,14 +138,49 @@ class Point{
   y: number = -1;
 }
 
-export enum GAMESTATES {
+enum GAMESTATES {
   Computer1MoveFromWinning = 2,
   ComputerWon = 3,
   Player1MoveFromWinning = 8,
   PlayerWon = 12,
 }
 
-export enum PLAYERS{
+enum PLAYERS{
   PLAYER = 4,
   COMPUTER = 1
 }
+
+function makeBoardHTML(){
+  let html: string = '';
+  for(var y=0; y<3; y++){
+    html += '<p>';
+    for(var x=0; x<3; x++){
+      html += '<span class="' + getSquare(x, y) + ' square">x</span>';
+    }
+    html += '</p>';
+  }
+  return html;
+}
+
+function getSquare(x: number, y: number): string{
+  let current: any = board[x][y];
+  if( isNaN(current) ){
+    return "emptyPiece"
+  }else if(current == PLAYERS.PLAYER && userIsXs){
+    return "xPiece"
+  }
+  return "oPiece"
+}
+
+$(()=>{
+  let game: Game = new Game();
+  game.placePiece(0,0,PLAYERS.PLAYER);
+  game.computerTakeTurn();
+  game.placePiece(0,2,PLAYERS.PLAYER);
+  game.computerTakeTurn();
+  game.placePiece(2,2,PLAYERS.PLAYER);
+  game.computerTakeTurn();
+
+  $('#board').html(makeBoardHTML());
+  console.log('test');
+})

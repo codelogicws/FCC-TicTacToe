@@ -1,0 +1,17 @@
+.emptyPiece{
+  background-color: white;
+  content:  "Test";
+}
+
+.xPiece{
+  background-color: blue;
+}
+
+.oPiece{
+  background-color: red;
+}
+
+.square{
+  width: 100px;
+  height: 100px;
+}
