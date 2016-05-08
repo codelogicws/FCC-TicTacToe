@@ -155,7 +155,7 @@ function makeBoardHTML(){
   for(var y=0; y<3; y++){
     html += '<p>';
     for(var x=0; x<3; x++){
-      html += '<span class="' + getSquare(x, y) + ' square">x</span>';
+      html += getSquare(x, y);
     }
     html += '</p>';
   }
@@ -165,14 +165,15 @@ function makeBoardHTML(){
 function getSquare(x: number, y: number): string{
   let current: any = board[x][y];
   if( isNaN(current) ){
-    return "emptyPiece"
-  }else if(current == PLAYERS.PLAYER && userIsXs){
-    return "xPiece"
+    return "<span class='emptyPiece btn btn-primary square'></span>"
+  }else if(  (current == PLAYERS.PLAYER && userIsXs)  || (current==PLAYERS.COMPUTER && !userIsXs)  ){
+    return "<span class='xPiece square'></span>"
   }
-  return "oPiece"
+  return "<span class='oPiece square'></span>"
 }
 
 $(()=>{
+  userIsXs = confirm('Do you want to be X\'s');
   let game: Game = new Game();
   game.placePiece(0,0,PLAYERS.PLAYER);
   game.computerTakeTurn();
@@ -182,5 +183,4 @@ $(()=>{
   game.computerTakeTurn();
 
   $('#board').html(makeBoardHTML());
-  console.log('test');
 })

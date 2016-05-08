@@ -1,17 +1,25 @@
 .emptyPiece{
-  background-color: white;
-  content:  "Test";
+}
+
+.emptyPiece::before{
+  content: "-";
 }
 
 .xPiece{
-  background-color: blue;
+}
+
+.xPiece::before{
+  content: "X";
 }
 
 .oPiece{
-  background-color: red;
+}
+
+.oPiece::before{
+  content: "O";
 }
 
 .square{
-  width: 100px;
-  height: 100px;
+  margin: 20px;
+  padding: 10px;
 }
