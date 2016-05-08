@@ -1,9 +1,5 @@
 /// <reference path="../typings/jquery/jquery.d.ts"/>
 
-let board: number[][] = [[,,],[,,],[,,]];
-let userIsXs: boolean = true;
-
-
 class Game{
   constructor(){
     board = [[,,],[,,],[,,]];
@@ -34,9 +30,30 @@ class Game{
     let currentState: GameStateResult = this.getCurrentState();
     if(currentState.is1FromWinning()){
        currentState.lastEmpty.toBoard(PLAYERS.COMPUTER);
+    }else if(board[1][1] == null){
+      this.placePiece(1,1,PLAYERS.COMPUTER);
+    }else if(this.getOpenCorner() != null){
+      this.getOpenCorner().toBoard(PLAYERS.COMPUTER);
     }else{
       this.computerPlaceRandomPiece();
     }
+  }
+
+  private getOpenCorner(){
+    if(this.checkSquare(0,0)){
+      return new Point(0,0);
+    }else if(this.checkSquare(0,2)){
+      return new Point(0,2);
+    }else if(this.checkSquare(2,0)){
+      return new Point(2,0);
+    }else if(this.checkSquare(2,2)){
+      return new Point(2,2);
+    }
+    return null;
+  }
+
+  private checkSquare(x:number, y:number){
+    return (board[x][y] == null);
   }
 
   public getCurrentState(): GameStateResult{
@@ -100,6 +117,10 @@ class GameStateResult{
       return true;
     }else if(this.isWinning(other.state)){
       return false;
+    }else if(this.state == GAMESTATES.Computer1MoveFromWinning){
+      return true;
+    }else if(other.state == GAMESTATES.Computer1MoveFromWinning){
+      return false;
     }else if(this.is1FromWin(other.state)){
       return false;
     }
@@ -108,6 +129,10 @@ class GameStateResult{
 
   public is1FromWinning(){
     return this.is1FromWin(this.state);
+  }
+
+  public thisIsWinning(){
+    return this.isWinning(this.state);
   }
 
   private isWinning(k: GAMESTATES){
@@ -165,22 +190,82 @@ function makeBoardHTML(){
 function getSquare(x: number, y: number): string{
   let current: any = board[x][y];
   if( isNaN(current) ){
-    return "<span class='emptyPiece btn btn-primary square'></span>"
+    return "<span onclick='clicked("+x+","+y+")' class='emptyPiece square' value='i have a value'></span>"
   }else if(  (current == PLAYERS.PLAYER && userIsXs)  || (current==PLAYERS.COMPUTER && !userIsXs)  ){
     return "<span class='xPiece square'></span>"
   }
   return "<span class='oPiece square'></span>"
 }
 
-$(()=>{
-  userIsXs = confirm('Do you want to be X\'s');
-  let game: Game = new Game();
-  game.placePiece(0,0,PLAYERS.PLAYER);
-  game.computerTakeTurn();
-  game.placePiece(0,2,PLAYERS.PLAYER);
-  game.computerTakeTurn();
-  game.placePiece(2,2,PLAYERS.PLAYER);
-  game.computerTakeTurn();
+function clicked(x:number, y:number){
+  game.placePiece(x,y,PLAYERS.PLAYER);
+  checkUserWin();
+  computerTakeTurnIfGamesNotOver();
+  drawBoard();
+  checkForWins();
+  checkForDraw();
+  drawBoard();
+}
 
+function computerTakeTurnIfGamesNotOver(){
+  if(game.getCurrentState().state != GAMESTATES.PlayerWon && !userWon){
+    game.computerTakeTurn();
+  }
+}
+
+function checkForDraw(){
+  if(!game.getCurrentState().thisIsWinning() || userWon){
+    if($('.emptyPiece').length == 0){
+      console.log("draw was done");
+      endGame("Draw");
+      drawBoard();
+    }
+  }
+}
+
+function checkUserWin(){
+  if(game.getCurrentState().state == GAMESTATES.PlayerWon)
+    userWon = true;
+}
+
+function checkForWins(){
+  if(game.getCurrentState().state == GAMESTATES.PlayerWon || userWon){
+    endGame("You Won!")
+  } else if(game.getCurrentState().state == GAMESTATES.ComputerWon){
+    endGame("The Computer Won");
+  }
+}
+
+function endGame(message: string){
+  drawBoard();
+  alert(message);
+  newGame();
+}
+
+function drawBoard(){
   $('#board').html(makeBoardHTML());
+}
+
+function newGame(){
+  let game: Game = new Game();
+  userWon = false;
+  game.printBoard();
+  userIsXs = confirm('Do you want to be X\'s');
+  if(computerStartFirst){
+    game.computerTakeTurn();
+    drawBoard();
+  }
+  computerStartFirst = !computerStartFirst;
+}
+
+let board: number[][] = [[,,],[,,],[,,]];
+let userIsXs: boolean = true;
+let computerStartFirst = true;
+let userWon = false;
+let game: Game = new Game();
+newGame();
+
+
+$(()=>{
+  drawBoard();
 })
