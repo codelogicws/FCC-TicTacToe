@@ -178,23 +178,25 @@ enum PLAYERS{
 function makeBoardHTML(){
   let html: string = '';
   for(var y=0; y<3; y++){
-    html += '<p>';
+    html += '<div class="row">';
     for(var x=0; x<3; x++){
-      html += getSquare(x, y);
+      let extraClass:string = (y==0)?'top':(y==1)?'middle':'bottom';
+      extraClass += (x==0)?' left':(x==2)?' right':' middleVirt';
+      html += getSquare(x, y, extraClass);
     }
-    html += '</p>';
+    html += '</div>';
   }
   return html;
 }
 
-function getSquare(x: number, y: number): string{
+function getSquare(x: number, y: number, extraClass:string): string{
   let current: any = board[x][y];
   if( isNaN(current) ){
-    return "<span onclick='clicked("+x+","+y+")' class='emptyPiece square' value='i have a value'></span>"
+    return "<span onclick='clicked("+x+","+y+")' class='col-xs-4 emptyPiece square "+extraClass+"' value='i have a value'>-</span>"
   }else if(  (current == PLAYERS.PLAYER && userIsXs)  || (current==PLAYERS.COMPUTER && !userIsXs)  ){
-    return "<span class='xPiece square'></span>"
+    return "<span class='col-xs-4 xPiece square "+extraClass+"'>X</span>"
   }
-  return "<span class='oPiece square'></span>"
+  return "<span class='col-xs-4 oPiece square "+extraClass+"'>O</span>"
 }
 
 function clicked(x:number, y:number){
